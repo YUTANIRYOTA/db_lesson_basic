@@ -1,6 +1,7 @@
+
 Q1
 CREATE TABLE departments (
-departments_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+department_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(20) NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -52,14 +53,14 @@ UPDATE people SET department_id = '1' WHERE email = 'suzuki@gizumo.jp';
 UPDATE people SET department_id = '1' WHERE email = 'hayasaka@gizumo.co.jp';
 
 Q5
-SELECT * FROM people WHERE gender = 1 ORDER BY age DESC;
+SELECT name,age FROM people WHERE gender = 1 ORDER BY age DESC;
 
 Q6
 `people`のテーブルから`department_id` = 1という特定のレコードだけを取得し`created_at`の昇順で並び替えて、カラム名　`name`, `email`, `age`を表示せよ
 
 
 Q7
-SELECT * FROM people WHERE age BETWEEN 20 AND 30 AND gender = 2 OR age BETWEEN 40 AND 50 AND gender = 1;
+SELECT name FROM people WHERE age BETWEEN 20 AND 29 AND gender = 2 OR age BETWEEN 40 AND 49 AND gender = 1;
 
 Q8
 SELECT * FROM people WHERE department_id = 1 ORDER BY age;
@@ -68,9 +69,10 @@ Q9
 SELECT AVG(age) AS average_age FROM people WHERE department_id = 2 AND gender = 2;
 
 Q10 
-SELECT people.name, people.department_id, reports.content
-FROM people INNER JOIN reports ON people.person_id = reports.person_id;
+SELECT people.name, departments.name, reports.content
+FROM people INNER JOIN departments ON people.department_id = departments.department_id
+INNER JOIN reports ON people.person_id = reports.person_id;
 
 Q11
- SELECT people.name, reports.content 
+SELECT people.name
 FROM people LEFT OUTER JOIN reports ON people.person_id = reports.person_id WHERE content IS NULL;
